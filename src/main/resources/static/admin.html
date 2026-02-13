@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ParkEase</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-grid" style="padding-top: 0;">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <a href="index.html" class="logo mb-2"><i class="fas fa-parking"></i> ParkEase</a>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem;">Admin Panel v1.0</p>
+        
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active"><i class="fas fa-home"></i> Overview</a></li>
+            <li><a href="user-list.html"><i class="fas fa-users"></i> Users</a></li>
+            <li><a href="#"><i class="fas fa-map-marked-alt"></i> Zones</a></li>
+            <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Revenue</a></li>
+            <li><a href="#" onclick="logout()" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <div class="flex justify-between items-center mb-2">
+            <div>
+                <h1 style="font-size: 1.75rem;">Dashboard Overview</h1>
+                <p style="color: var(--text-muted);">Welcome back, Admin!</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-outline"><i class="fas fa-download"></i> Export</button>
+                <div style="width: 40px; height: 40px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats Row -->
+        <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="stat-card animate-slide-up delay-100">
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Total Revenue</h3>
+                    <p style="font-size: 1.75rem; font-weight: 800; color: var(--text-main); margin-top: 0.25rem;">₹1,240</p>
+                    <span style="font-size: 0.8rem; color: var(--success);"><i class="fas fa-arrow-up"></i> +12% this week</span>
+                </div>
+                <div class="stat-icon" style="background: #dcfce7; color: var(--success);">
+                    <i class="fas fa-rupee-sign"></i>
+                </div>
+            </div>
+            
+            <div class="stat-card animate-slide-up delay-200">
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Occupancy</h3>
+                    <p style="font-size: 1.75rem; font-weight: 800; color: var(--text-main); margin-top: 0.25rem;">76%</p>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Current capacity</span>
+                </div>
+                <div class="stat-icon" style="background: #fff7ed; color: #f97316;">
+                    <i class="fas fa-car"></i>
+                </div>
+            </div>
+
+            <div class="stat-card animate-slide-up delay-300">
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Active Sessions</h3>
+                    <p style="font-size: 1.75rem; font-weight: 800; color: var(--text-main); margin-top: 0.25rem;">42</p>
+                    <span style="font-size: 0.8rem; color: var(--primary);">Live tracking</span>
+                </div>
+                <div class="stat-icon" style="background: var(--primary-light); color: var(--primary);">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+
+             <div class="stat-card animate-slide-up" style="animation-delay: 0.4s;">
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Issues</h3>
+                    <p style="font-size: 1.75rem; font-weight: 800; color: var(--text-main); margin-top: 0.25rem;">3</p>
+                    <span style="font-size: 0.8rem; color: var(--danger);">Requires attention</span>
+                </div>
+                <div class="stat-icon" style="background: #fee2e2; color: var(--danger);">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts / Main Area -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+            
+            <div class="card" style="height: 400px;">
+                <div class="flex justify-between items-center mb-2">
+                    <h3>Revenue Analytics</h3>
+                    <select style="border: 1px solid var(--border-color); padding: 0.25rem 0.5rem; border-radius: 6px;">
+                        <option>This Week</option>
+                        <option>This Month</option>
+                    </select>
+                </div>
+                <canvas id="revenueChart"></canvas>
+            </div>
+
+            <div class="card">
+                <h3 class="mb-2">Recent Activity</h3>
+                <ul style="list-style: none;">
+                    <li style="padding: 1rem 0; border-bottom: 1px solid var(--border-color); display: flex; gap: 1rem; align-items: Flex-start;">
+                        <div style="width: 8px; height: 8px; background: var(--success); border-radius: 50%; margin-top: 6px;"></div>
+                        <div>
+                            <p style="font-size: 0.9rem; font-weight: 600;">Slot A5 Booked</p>
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">User #42 • 2 mins ago</p>
+                        </div>
+                    </li>
+                    <li style="padding: 1rem 0; border-bottom: 1px solid var(--border-color); display: flex; gap: 1rem; align-items: Flex-start;">
+                        <div style="width: 8px; height: 8px; background: var(--primary); border-radius: 50%; margin-top: 6px;"></div>
+                        <div>
+                            <p style="font-size: 0.9rem; font-weight: 600;">New User Registration</p>
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">john.d@example.com • 15 mins ago</p>
+                        </div>
+                    </li>
+                     <li style="padding: 1rem 0; display: flex; gap: 1rem; align-items: Flex-start;">
+                        <div style="width: 8px; height: 8px; background: var(--danger); border-radius: 50%; margin-top: 6px;"></div>
+                        <div>
+                            <p style="font-size: 0.9rem; font-weight: 600;">Gate 3 Malfunction</p>
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Sensor Error • 1 hr ago</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </main>
+
+    <script>
+        // Check Auth
+        const user = JSON.parse(localStorage.getItem('parkease_user'));
+        if(!user || user.role !== 'admin') {
+             alert('Access Denied: You must be an administrator to view this page.');
+             window.location.href = 'login.html'; 
+        }
+
+        function logout() {
+            localStorage.removeItem('parkease_user');
+            window.location.href = 'admin-login.html';
+        }
+
+        // Initialize Chart
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Revenue (₹)',
+                    data: [150, 230, 180, 320, 290, 450, 410],
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

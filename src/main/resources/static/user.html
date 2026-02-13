@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase | User Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-grid" style="padding-top: 0;">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <a href="index.html" class="logo mb-2"><i class="fas fa-parking"></i> ParkEase</a>
+        
+        <div class="user-profile mb-4 flex items-center gap-2 p-2 bg-gray-50 rounded text-sm">
+            <div style="width: 32px; height: 32px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">U</div>
+            <div>
+                <div class="font-bold" id="userName">User</div>
+                <div class="text-xs text-muted" id="userEmail">user@example.com</div>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active"><i class="fas fa-columns"></i> Dashboard</a></li>
+            <li><a href="bookings.html"><i class="fas fa-ticket-alt"></i> My Bookings</a></li>
+            <li><a href="search.html"><i class="fas fa-search-location"></i> Find Spot</a></li>
+            <li><a href="#"><i class="fas fa-wallet"></i> Wallet <span class="badge" style="background: #dcfce7; color: #166534; font-size: 0.7rem; padding: 2px 6px; margin-left: auto;">₹45.00</span></a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            <li style="margin-top: 2rem;"><a href="#" onclick="logout()" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+
+        <div class="card mt-4 bg-blue-50 border-blue-100 p-3">
+            <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem;"><i class="fas fa-crosshairs text-primary"></i> Spot Sniper</h4>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">Chance of finding a spot in your favorite zone:</p>
+            <div class="flex items-center gap-2">
+                <div style="height: 6px; flex: 1; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 85%; background: var(--success);"></div>
+                </div>
+                <span style="font-size: 0.8rem; font-weight: bold; color: var(--success);">85%</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <header class="flex justify-between items-center mb-4">
+            <div>
+                <h1 style="font-size: 1.75rem;">Welcome back!</h1>
+                <p style="color: var(--text-muted);">Here's what's happening today.</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-primary btn-sm" onclick="window.location.href='search.html'"><i class="fas fa-bolt"></i> Quick Book</button>
+            </div>
+        </header>
+
+        <!-- Quick Stats -->
+        <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+            <div class="stat-card animate-slide-up delay-100">
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 0.8rem;">Active Bookings</h3>
+                    <p style="font-size: 1.5rem; font-weight: 800;">1</p>
+                </div>
+                <div class="stat-icon bg-blue-50 text-primary"><i class="fas fa-ticket-alt"></i></div>
+            </div>
+            <div class="stat-card animate-slide-up delay-200">
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 0.8rem;">Wallet Balance</h3>
+                    <p style="font-size: 1.5rem; font-weight: 800;">₹45.00</p>
+                </div>
+                <div class="stat-icon bg-green-50 text-success"><i class="fas fa-wallet"></i></div>
+            </div>
+            <div class="stat-card animate-slide-up delay-300">
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 0.8rem;">Loyalty Points</h3>
+                    <p style="font-size: 1.5rem; font-weight: 800;">1,250</p>
+                </div>
+                <div class="stat-icon bg-purple-50 text-accent" style="color: #8b5cf6;"><i class="fas fa-star"></i></div>
+            </div>
+        </div>
+
+        <div class="grid-split" style="gap: 1.5rem; grid-template-columns: 2fr 1fr; height: auto;">
+            
+            <!-- Recent Activity / Bookings -->
+            <div class="card">
+                <div class="flex justify-between items-center mb-3">
+                    <h3>Recent Bookings</h3>
+                    <a href="bookings.html" class="text-sm text-primary">View All</a>
+                </div>
+                
+                <div id="recentBookingsList">
+                    <!-- Loading State -->
+                    <div class="skeleton mb-2" style="height: 60px;"></div>
+                    <div class="skeleton mb-2" style="height: 60px;"></div>
+                </div>
+            </div>
+
+            <!-- Favorite Spots -->
+            <div class="card">
+                <h3 class="mb-3">Quick Navigation</h3>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded cursor-pointer transition">
+                        <div class="w-10 h-10 rounded bg-gray-100 flex items-center justify-center text-gray-500"><i class="fas fa-home"></i></div>
+                        <div>
+                            <div class="font-bold text-sm">Home</div>
+                            <div class="text-xs text-muted">12 mins away</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded cursor-pointer transition">
+                        <div class="w-10 h-10 rounded bg-gray-100 flex items-center justify-center text-gray-500"><i class="fas fa-briefcase"></i></div>
+                        <div>
+                            <div class="font-bold text-sm">Work</div>
+                            <div class="text-xs text-muted">25 mins away</div>
+                        </div>
+                    </div>
+                     <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded cursor-pointer transition">
+                        <div class="w-10 h-10 rounded bg-gray-100 flex items-center justify-center text-gray-500"><i class="fas fa-dumbbell"></i></div>
+                        <div>
+                            <div class="font-bold text-sm">Gym</div>
+                            <div class="text-xs text-muted">5 mins away</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                     <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem;">Near You</h4>
+                     <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=300&h=150&fit=crop" style="width: 100%; border-radius: 8px; margin-bottom: 0.5rem;">
+                     <div class="flex justify-between items-center">
+                         <span class="text-sm font-bold">Downtown Garage</span>
+                         <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">24 Slots</span>
+                     </div>
+                </div>
+            </div>
+
+        </div>
+
+    <script type="module" src="js/user-dashboard.js"></script>
+</body>
+</html>

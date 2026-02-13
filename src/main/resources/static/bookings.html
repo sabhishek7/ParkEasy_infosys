@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase | My Bookings</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background: var(--bg-body); padding-top: var(--nav-height);">
+
+    <!-- Navbar -->
+    <header id="main-header">
+        <div class="container navbar">
+            <a href="index.html" class="logo"><i class="fas fa-parking"></i> ParkEase</a>
+            
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="search.html">Find Parking</a>
+                <a href="bookings.html" class="active">My Bookings</a>
+                <a href="#contact">Contact</a>
+                
+                <div id="authLinks" class="hidden-desktop">
+                     <!-- Populated by JS -->
+                </div>
+            </nav>
+
+            <div id="authLinksDesktop" class="hidden-mobile">
+                <a href="login.html" class="btn btn-primary">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container animate-fade-in" style="max-width: 900px; margin-top: 4rem; padding-bottom: 4rem;">
+        <div class="flex justify-between items-center mb-2">
+            <h1>My Bookings</h1>
+            <a href="search.html" class="btn btn-primary"><i class="fas fa-plus"></i> New Booking</a>
+        </div>
+
+        <div class="flex gap-2 mb-2" style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+            <button class="btn btn-primary" style="border-radius: 100px; padding: 0.5rem 1.5rem;">Upcoming</button>
+            <button class="btn btn-outline" style="border-radius: 100px; padding: 0.5rem 1.5rem; border: none; color: var(--text-muted);">History</button>
+            <button class="btn btn-outline" style="border-radius: 100px; padding: 0.5rem 1.5rem; border: none; color: var(--text-muted);">Cancelled</button>
+        </div>
+
+        <div id="bookingList" style="margin-top: 2rem;">
+            <!-- Skeletons -->
+            <div class="card skeleton mb-2" style="height: 120px;"></div>
+            <div class="card skeleton mb-2" style="height: 120px;"></div>
+        </div>
+    </div>
+
+    <script type="module" src="js/bookings-logic.js"></script>
+    <script type="module" src="js/app.js"></script>
+
+</body>
+</html>

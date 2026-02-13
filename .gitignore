@@ -1,0 +1,64 @@
+
+# Valid for Java projects
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven
+target/
+.mvn/wrapper/maven-wrapper.properties
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+.springBeans
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Mac
+.DS_Store
+
+# Spring Boot
+HELP.md
+logs/
+
+# Frontend assets (if applicable)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# User Specific Documentation (Do not upload to GitHub)
+Documentation/
+docs/
+*.pdf
+*.docx
+*.txt
+# Keep README.md as it is standard for GitHub repos
+# If user wants README ignored too, they can uncomment:
+# README.md
+
+# Application properties with secrets (If using external config)
+# application.properties

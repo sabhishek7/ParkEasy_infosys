@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase | Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background: radial-gradient(circle at center, #eff6ff 0%, #dbeafe 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem;">
+
+    <div class="card animate-scale-up" style="width: 100%; max-width: 420px; padding: 2.5rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.5);">
+        <div class="text-center mb-2">
+            <a href="index.html" class="logo justify-center mb-2" style="justify-content: center; font-size: 2rem;"><i class="fas fa-parking"></i> ParkEase</a>
+            <h2 id="title" style="color: var(--text-main); font-size: 1.5rem;">Welcome Back</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.95rem;">Please sign in to continue</p>
+        </div>
+        
+        <form id="authForm" class="flex flex-col gap-2" style="margin-top: 2rem;">
+            <div class="input-group" style="padding: 0; border: none; margin-bottom: 1.5rem;">
+                <label style="margin-bottom: 0.5rem;">Email Address</label>
+                <div style="position: relative;">
+                    <i class="fas fa-envelope" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="email" id="email" class="input-field" required placeholder="name@example.com" style="padding: 1rem 1rem 1rem 3rem; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px;">
+                </div>
+            </div>
+
+            <div class="input-group" style="padding: 0; border: none; margin-bottom: 1.5rem;">
+                <label style="margin-bottom: 0.5rem;">Password</label>
+                <div style="position: relative;">
+                    <i class="fas fa-lock" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="password" id="password" class="input-field" required placeholder="••••••••" style="padding: 1rem 1rem 1rem 3rem; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px;">
+                </div>
+            </div>
+
+            <!-- Admin Code Section (Initially Hidden) -->
+            <div id="adminSection" style="display: none; margin-bottom: 1.5rem;">
+                <div class="flex items-center gap-2 mb-2">
+                    <input type="checkbox" id="isAdmin" style="width: auto;">
+                    <label for="isAdmin" style="margin: 0; font-size: 0.9rem;">Register as Admin</label>
+                </div>
+                <div id="adminCodeGroup" style="display: none;">
+                    <input type="password" id="adminCode" class="input-field" placeholder="Enter Admin Secret Code" style="padding: 1rem; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px;">
+                </div>
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary w-full" id="submitBtn" style="padding: 1rem; font-size: 1rem;">
+                Sign In <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
+            </button>
+        </form>
+
+        <p class="text-center mt-2" style="font-size: 0.95rem; color: var(--text-muted); margin-top: 2rem;">
+            <span id="toggleText">Don't have an account?</span> 
+            <a href="#" id="toggleLink" style="color: var(--primary); font-weight: 600; text-decoration: none; margin-left: 0.5rem;">Create Account</a>
+        </p>
+        
+        <div class="text-center mt-4">
+             <a href="admin-login.html" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: none;">Admin Portal Login</a>
+        </div>
+    </div>
+
+    <script type="module" src="js/login-logic.js"></script>
+</body>
+</html>
