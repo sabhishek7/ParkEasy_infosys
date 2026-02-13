@@ -232,7 +232,10 @@
                         <div class="card-features">
                             ${loc.features.slice(0,2).map(f => `<span class="feature-tag">${f}</span>`).join('')}
                         </div>
-                        <a href="details.html?id=${loc.id}" class="btn btn-outline w-full" style="margin-top: 1.5rem;">View Details</a>
+                        <div class="flex gap-2" style="margin-top: 1.5rem;">
+                            <a href="details.html?id=${loc.id}" class="btn btn-outline w-full">Details</a>
+                            <a href="details.html?id=${loc.id}#book" class="btn btn-primary w-full">Book Now</a>
+                        </div>
                     `;
                     grid.appendChild(card);
                 });
