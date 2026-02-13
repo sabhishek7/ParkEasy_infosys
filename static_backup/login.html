@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase | Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background: radial-gradient(circle at center, #eff6ff 0%, #dbeafe 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem;">
+
+    <div class="card animate-scale-up" style="width: 100%; max-width: 420px; padding: 2.5rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.5);">
+        <div class="text-center mb-2">
+            <a href="index.html" class="logo justify-center mb-2" style="justify-content: center; font-size: 2rem;"><i class="fas fa-parking"></i> ParkEase</a>
+            <h2 id="title" style="color: var(--text-main); font-size: 1.5rem;">Welcome Back</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.95rem;">Please sign in to continue</p>
+        </div>
+        
+        <form id="authForm" class="flex flex-col gap-2" style="margin-top: 2rem;">
+            <div class="input-group" style="padding: 0; border: none; margin-bottom: 1.5rem;">
+                <label style="margin-bottom: 0.5rem;">Email Address</label>
+                <div style="position: relative;">
+                    <i class="fas fa-envelope" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="email" id="email" class="input-field" required placeholder="name@example.com" style="padding: 1rem 1rem 1rem 3rem; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px;">
+                </div>
+            </div>
+
+            <div class="input-group" style="padding: 0; border: none; margin-bottom: 1.5rem;">
+                <label style="margin-bottom: 0.5rem;">Password</label>
+                <div style="position: relative;">
+                    <i class="fas fa-lock" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="password" id="password" class="input-field" required placeholder="••••••••" style="padding: 1rem 1rem 1rem 3rem; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px;">
+                </div>
+            </div>
+
+
+            
+            <button type="submit" class="btn btn-primary w-full" id="submitBtn" style="padding: 1rem; font-size: 1rem;">
+                Sign In <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
+            </button>
+        </form>
+
+        <p class="text-center mt-2" style="font-size: 0.95rem; color: var(--text-muted); margin-top: 2rem;">
+            <span id="toggleText">Don't have an account?</span> 
+            <a href="#" id="toggleLink" style="color: var(--primary); font-weight: 600; text-decoration: none; margin-left: 0.5rem;">Create Account</a>
+        </p>
+    </div>
+
+    <script type="module">
+        import { API } from './js/mock-api.js';
+        import { showToast, initAuth } from './js/app.js';
+
+        // Redirect if already logged in
+        if(localStorage.getItem('parkease_user')){
+            window.location.href = 'index.html';
+        }
+
+        const form = document.getElementById('authForm');
+        const title = document.getElementById('title');
+        const submitBtn = document.getElementById('submitBtn');
+        const toggleLink = document.getElementById('toggleLink');
+        const toggleText = document.getElementById('toggleText');
+
+        let isLogin = true;
+
+        toggleLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLogin = !isLogin;
+            title.innerText = isLogin ? 'Welcome Back' : 'Create Account';
+            submitBtn.innerHTML = isLogin ? 'Sign In <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>' : 'Create Account <i class="fas fa-user-plus" style="margin-left: 0.5rem;"></i>';
+            toggleText.innerText = isLogin ? "Don't have an account?" : "Already have an account?";
+            toggleLink.innerText = isLogin ? 'Create Account' : 'Sign In';
+            
+            // Animation reset
+            form.style.animation = 'none';
+            form.offsetHeight; /* trigger reflow */
+            form.style.animation = 'fadeIn 0.5s ease';
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+
+            const originalBtnContent = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
+            
+            try {
+                // Simulate network delay
+                await new Promise(r => setTimeout(r, 1000));
+
+                let res;
+                if(isLogin) {
+                    res = await API.login(email, pass);
+                } else {
+                    res = await API.register(email, pass);
+                }
+
+                if(res.success) {
+                    showToast(isLogin ? "Welcome back!" : "Account created successfully!", "success");
+                    
+                    if(res.user) {
+                        localStorage.setItem('parkease_user', JSON.stringify(res.user));
+                    }
+
+                    setTimeout(() => {
+                        if(res.user.role === 'admin') {
+                            window.location.href = 'admin.html';
+                        } else {
+                            window.location.href = 'index.html';
+                        }
+                    }, 1000);
+                } else {
+                    showToast(res.message || "Invalid credentials", "error");
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnContent;
+                }
+
+            } catch(err) {
+                console.error(err);
+                showToast("An error occurred. Please try again.", "error");
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnContent;
+            }
+        });
+
+    </script>
+</body>
+</html>
